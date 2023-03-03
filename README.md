@@ -36,3 +36,6 @@ https://www.tradinghub.eu/en-gb/Download/Archive-NetConnect-Germany#1306111-conv
 
 #### Electricity
 
+Ember (2023): European wholesale electricity price data. Wholesale day-ahead electricity price data for European countries, sources from ENTSO-e and cleaned. Format: CSV (Accessed 03-Mar-2023)
+
+https://ember-climate.org/data-catalogue/european-wholesale-electricity-price-data/
