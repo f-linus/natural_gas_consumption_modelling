@@ -34,6 +34,10 @@ https://www.tradinghub.eu/en-gb/Download/Archive-NetConnect-Germany#1306111-conv
 
 #### Crude oil
 
+U.S. Energy Information Administration, Crude Oil Prices: Brent - Europe [DCOILBRENTEU], retrieved from FRED, Federal Reserve Bank of St. Louis; March 1, 2023.
+
+https://fred.stlouisfed.org/series/DCOILBRENTEU
+
 #### Electricity
 
 Ember (2023): European wholesale electricity price data. Wholesale day-ahead electricity price data for European countries, sources from ENTSO-e and cleaned. Format: CSV (Accessed 03-Mar-2023)
