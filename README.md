@@ -57,3 +57,23 @@ https://www.eex.com/en/market-data/environmental-markets/eua-primary-auction-spo
 GIE (Gas Infrastructure Europe): GIE AISBL 2022. Aggregated Gas Storage Inventory (AGSI): Germany. Format: CSV (Accessed 03-Mar-2023)
 
 https://agsi.gie.eu/data-overview/DE
+
+### Natural gas consumption in Germany
+
+#### Daily natural gas consumption in the Trading Hub Europe market area
+
+Trading Hub Europe GmbH (2023): Publication of the aggregate consumption data: Aggregated consumption data. Format: CSV (Accessed on 04-Mar-2023)
+
+https://www.tradinghub.eu/en-gb/Publications/Transparency/Aggregated-consumption-data
+
+#### Daily natural gas consumption in the historic GASPOOL market area
+
+Trading Hub Europe GmbH (2023): Archive of publications for the former GASPOOL market area. Other: Aggregated Consumption Date Market Area GASPOOL (CSV File). Format: CSV (Accessed on 04-Mar-2023)
+
+https://www.tradinghub.eu/en-gb/Download/Archive-GASPOOL#1301161-other
+
+#### Daily natural gas consumption in the historic NetConnect Germany market area
+
+Trading Hub Europe GmbH (2023): Archive of publications for the former NCG market area. Other: Aggregated consumption data (CSV File). Format: CSV (Accessed on 04-Mar-2023)
+
+https://www.tradinghub.eu/en-gb/Download/Archive-NetConnect-Germany#1306157-other
