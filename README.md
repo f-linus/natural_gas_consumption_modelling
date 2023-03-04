@@ -46,7 +46,7 @@ https://ember-climate.org/data-catalogue/european-wholesale-electricity-price-da
 
 ### Emission allowance prices
 
-#### Auction results for European Emission Allowances (EUAs) at the European Energy Exchange (EEX)
+##### Auction results for European Emission Allowances (EUAs) at the European Energy Exchange (EEX)
 
 European Energy Exchange AG (2023): EUA Emission Spot Primary Market Auction Report - History. Format: XLS/XLSX (Accessed 04-Mar-2023)
 
