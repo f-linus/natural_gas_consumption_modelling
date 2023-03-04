@@ -43,3 +43,11 @@ https://fred.stlouisfed.org/series/DCOILBRENTEU
 Ember (2023): European wholesale electricity price data. Wholesale day-ahead electricity price data for European countries, sources from ENTSO-e and cleaned. Format: CSV (Accessed 03-Mar-2023)
 
 https://ember-climate.org/data-catalogue/european-wholesale-electricity-price-data/
+
+### Emission allowance prices
+
+#### Auction results for European Emission Allowances (EUAs) at the European Energy Exchange (EEX)
+
+European Energy Exchange AG (2023): EUA Emission Spot Primary Market Auction Report - History. Format: XLS/XLSX (Accessed 04-Mar-2023)
+
+https://www.eex.com/en/market-data/environmental-markets/eua-primary-auction-spot-download
