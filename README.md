@@ -4,7 +4,7 @@
 
 ### Weather
 
-##### Historic daily mean temperature in Germany
+#### Historic daily mean temperature in Germany
 
 Copernicus Climate Change Service (2020): Climate and energy indicators for Europe from 1979 to present derived from reanalysis. Copernicus Climate Change Service (C3S) Climate Data Store (CDS). 10.24381/cds.4bd77450 (Accessed on 02-Mar-2023)
 
@@ -46,7 +46,7 @@ https://ember-climate.org/data-catalogue/european-wholesale-electricity-price-da
 
 ### Emission allowance prices
 
-##### Auction results for European Emission Allowances (EUAs) at the European Energy Exchange (EEX)
+#### Auction results for European Emission Allowances (EUAs) at the European Energy Exchange (EEX)
 
 European Energy Exchange AG (2023): EUA Emission Spot Primary Market Auction Report - History. Format: XLS/XLSX (Accessed 04-Mar-2023)
 
