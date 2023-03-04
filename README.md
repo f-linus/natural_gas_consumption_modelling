@@ -51,3 +51,9 @@ https://ember-climate.org/data-catalogue/european-wholesale-electricity-price-da
 European Energy Exchange AG (2023): EUA Emission Spot Primary Market Auction Report - History. Format: XLS/XLSX (Accessed 04-Mar-2023)
 
 https://www.eex.com/en/market-data/environmental-markets/eua-primary-auction-spot-download
+
+### Natural gas storage levels in Germany
+
+GIE (Gas Infrastructure Europe): GIE AISBL 2022. Aggregated Gas Storage Inventory (AGSI): Germany. Format: CSV (Accessed 03-Mar-2023)
+
+https://agsi.gie.eu/data-overview/DE
