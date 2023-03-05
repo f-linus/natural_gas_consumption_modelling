@@ -59,3 +59,23 @@ def read_imbalance_prices(
             the_data["Positiver Ausgleichsenergiepreis (EUR/MWh)"],
         ]
     )
+
+
+def read_crude_oil_prices(
+    file: str = "data/raw/Crude oil prices Brent - Europe.csv",
+) -> pd.Series:
+    """Reads historic BRENT - EUROPE crude oil prices in USD/bbl and returns them as a pandas
+    series."""
+
+    crude_oil_prices = pd.read_csv(
+        file, parse_dates=["DATE"], index_col="DATE", decimal="."
+    )
+
+    crude_oil_prices.index.name = "Date"
+
+    # Convert values to float if possible, otherwise to nan
+    crude_oil_prices = crude_oil_prices.applymap(
+        lambda x: float(x) if x.replace(".", "", 1).isdigit() else float("nan")
+    )
+
+    return crude_oil_prices["DCOILBRENTEU"]
