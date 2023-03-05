@@ -79,3 +79,21 @@ def read_crude_oil_prices(
     )
 
     return crude_oil_prices["DCOILBRENTEU"]
+
+
+def read_electricity_prices(
+    file: str = "data/raw/European wholesale electricity prices.csv",
+) -> pd.Series:
+    """Reads historic wholesale electricity prices in Germany in EUR/MWh and returns them as a
+    pandas series."""
+
+    electricity_prices_raw = pd.read_csv(file)
+
+    # Filter for Germany
+    electricity_prices_germany = electricity_prices_raw.loc[
+        electricity_prices_raw["ISO3 Code"] == "DEU"
+    ]
+    electricity_prices_germany.set_index("Date", inplace=True)
+    electricity_prices_germany.index = pd.to_datetime(electricity_prices_germany.index)
+
+    return electricity_prices_germany["Price (EUR/MWhe)"]
