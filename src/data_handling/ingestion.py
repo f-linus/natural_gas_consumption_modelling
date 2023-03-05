@@ -156,16 +156,54 @@ def read_eua_auctions(
 
 
 def read_storage_levels(
-        file: str = "data/raw/StorageData_GIE_2011-01-01_2023-03-02.csv",
+    file: str = "data/raw/StorageData_GIE_2011-01-01_2023-03-02.csv",
 ) -> pd.Series:
     """Reads historic storage levels in TWh and returns them as a pandas series."""
 
     storage_levels = pd.read_csv(
-        file,
-        sep=';',
-        index_col='Gas Day Start',
-        parse_dates=True,
-        decimal='.'
+        file, sep=";", index_col="Gas Day Start", parse_dates=True, decimal="."
     )
 
-    return storage_levels['Gas in storage (TWh)']
+    return storage_levels["Gas in storage (TWh)"]
+
+
+def read_consumption(
+    file_netconnect: str = "data/raw/NetConnect Germany natural gas consumption.csv",
+    file_gaspool: str = "data/raw/GASPOOL natural gas consumption.csv",
+    file_the: str = "data/raw/Trading Hub Europe  Publications  Transparency  Aggregated consumption data.csv",
+) -> tuple([pd.Series, pd.Series, pd.Series]):
+    """Reads historic natural gas consumption in MWh and returns them as a tuple of pandas series."""
+
+    # Read NetConnect Germany CSV file
+    ncg_consumption = pd.read_csv(file_netconnect, sep=";", index_col="DayOfUse")
+
+    ncg_consumption.index = pd.to_datetime(ncg_consumption.index, format="%d.%m.%Y")
+
+    # Convert kWh to MWh and aggregate different measurement types
+    ncg_consumption = ncg_consumption.select_dtypes("number") / 1000
+    ncg_consumption_aggregated = ncg_consumption.sum(axis="columns")
+
+    # Read GASPOOL CSV file
+    gaspool_consumption = pd.read_csv(file_gaspool, sep=";", index_col="Datum")
+
+    gaspool_consumption.index = pd.to_datetime(
+        gaspool_consumption.index, format="%d.%m.%Y"
+    )
+    gaspool_consumption_aggregated = gaspool_consumption.sum(axis="columns")
+
+    # Read Trading Hub Europe CSV file
+    the_consumption = pd.read_csv(file_the, sep=";", thousands=",", index_col="Gasday")
+
+    the_consumption.index = pd.to_datetime(the_consumption.index, format="%d/%m/%Y")
+
+    # Convert kWh to MWh and aggregate different measurement types
+    the_consumption = the_consumption.select_dtypes("number") / 1000
+    the_consumption_aggregated = the_consumption.sum(axis="columns")
+
+    return tuple(
+        [
+            ncg_consumption_aggregated,
+            gaspool_consumption_aggregated,
+            the_consumption_aggregated,
+        ]
+    )
