@@ -97,3 +97,59 @@ def read_electricity_prices(
     electricity_prices_germany.index = pd.to_datetime(electricity_prices_germany.index)
 
     return electricity_prices_germany["Price (EUR/MWhe)"]
+
+
+def read_eua_auctions(
+    files_style_1: list = [
+        "data/raw/EEX EUA Auctions/emission-spot-primary-market-auction-report-2012-data.xls",
+        "data/raw/EEX EUA Auctions/emission-spot-primary-market-auction-report-2013-data.xls",
+        "data/raw/EEX EUA Auctions/emission-spot-primary-market-auction-report-2014-data.xls",
+        "data/raw/EEX EUA Auctions/emission-spot-primary-market-auction-report-2015-data.xls",
+    ],
+    files_style_2: list = [
+        "data/raw/EEX EUA Auctions/emission-spot-primary-market-auction-report-2016-data.xls",
+    ],
+    files_style_3: list = [
+        "data/raw/EEX EUA Auctions/emission-spot-primary-market-auction-report-2017-data.xls",
+        "data/raw/EEX EUA Auctions/emission-spot-primary-market-auction-report-2018-data.xls",
+        "data/raw/EEX EUA Auctions/emission-spot-primary-market-auction-report-2019-data.xls",
+        "data/raw/EEX EUA Auctions/emission-spot-primary-market-auction-report-2020-data.xlsx",
+        "data/raw/EEX EUA Auctions/emission-spot-primary-market-auction-report-2021-data.xlsx",
+        "data/raw/EEX EUA Auctions/emission-spot-primary-market-auction-report-2022-data.xlsx",
+        "data/raw/EEX EUA Auctions/primary_auction_report_20230214_39969994.xlsx",
+    ],
+) -> pd.Series:
+    """Reads historic EUA auction prices in EUR/tCO2 and returns them as a pandas series."""
+
+    eua_auctions = pd.Series(dtype="float64")
+    for file in files_style_1:
+        eua_auctions = pd.concat(
+            [
+                eua_auctions,
+                pd.read_excel(file, header=2, index_col="Date", parse_dates=True)[
+                    "Auction Price €/tCO2"
+                ],
+            ]
+        )
+
+    for file in files_style_2:
+        eua_auctions = pd.concat(
+            [
+                eua_auctions,
+                pd.read_excel(file, header=2, index_col="Date", parse_dates=True)[
+                    "Auction Price EUR/tCO2"
+                ],
+            ]
+        )
+
+    for file in files_style_3:
+        eua_auctions = pd.concat(
+            [
+                eua_auctions,
+                pd.read_excel(file, header=5, index_col="Date", parse_dates=True)[
+                    "Auction Price €/tCO2"
+                ],
+            ]
+        )
+
+    return eua_auctions
