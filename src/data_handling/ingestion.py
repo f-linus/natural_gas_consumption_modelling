@@ -153,3 +153,19 @@ def read_eua_auctions(
         )
 
     return eua_auctions
+
+
+def read_storage_levels(
+        file: str = "data/raw/StorageData_GIE_2011-01-01_2023-03-02.csv",
+) -> pd.Series:
+    """Reads historic storage levels in TWh and returns them as a pandas series."""
+
+    storage_levels = pd.read_csv(
+        file,
+        sep=';',
+        index_col='Gas Day Start',
+        parse_dates=True,
+        decimal='.'
+    )
+
+    return storage_levels['Gas in storage (TWh)']
