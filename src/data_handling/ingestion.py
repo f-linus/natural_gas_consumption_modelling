@@ -202,8 +202,8 @@ def read_consumption(
 
     return tuple(
         [
-            ncg_consumption_aggregated,
-            gaspool_consumption_aggregated,
-            the_consumption_aggregated,
+            ncg_consumption_aggregated.sort_index(),
+            gaspool_consumption_aggregated.sort_index(),
+            the_consumption_aggregated.sort_index(),
         ]
     )
