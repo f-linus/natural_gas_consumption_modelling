@@ -14,7 +14,7 @@ def read_temperatures(
     )
 
     # Convert Kelvin to Celsius
-    return copernicus_reanalysis["DE"] - 273.15
+    return (copernicus_reanalysis["DE"] - 273.15).rename("temperature")
 
 
 def read_imbalance_prices(
@@ -78,7 +78,20 @@ def read_crude_oil_prices(
         lambda x: float(x) if x.replace(".", "", 1).isdigit() else float("nan")
     )
 
-    return crude_oil_prices["DCOILBRENTEU"]
+    prices = crude_oil_prices["DCOILBRENTEU"].rename("crude_oil_price").sort_index()
+
+    # Fill up index
+    prices = prices.reindex(
+        pd.date_range(
+            start=prices.index.min(),
+            end=prices.index.max(),
+            freq="D",
+        )
+    )
+
+    # Fill up missing values
+    prices = prices.interpolate()
+    return prices
 
 
 def read_electricity_prices(
@@ -96,7 +109,7 @@ def read_electricity_prices(
     electricity_prices_germany.set_index("Date", inplace=True)
     electricity_prices_germany.index = pd.to_datetime(electricity_prices_germany.index)
 
-    return electricity_prices_germany["Price (EUR/MWhe)"]
+    return electricity_prices_germany["Price (EUR/MWhe)"].rename("electricity_price")
 
 
 def read_eua_auctions(
@@ -152,6 +165,20 @@ def read_eua_auctions(
             ]
         )
 
+    eua_auctions = eua_auctions.sort_index().groupby(eua_auctions.index).mean().rename("eua_price")
+
+    # Fill up index
+    eua_auctions = eua_auctions.reindex(
+        pd.date_range(
+            start=eua_auctions.index.min(),
+            end=eua_auctions.index.max(),
+            freq="D",
+        )
+    )
+
+    # Fill up missing values
+    eua_auctions = eua_auctions.interpolate()
+
     return eua_auctions
 
 
@@ -164,7 +191,7 @@ def read_storage_levels(
         file, sep=";", index_col="Gas Day Start", parse_dates=True, decimal="."
     )
 
-    return storage_levels["Gas in storage (TWh)"]
+    return storage_levels["Gas in storage (TWh)"].rename("storage_levels")
 
 
 def read_consumption(
@@ -207,3 +234,43 @@ def read_consumption(
             the_consumption_aggregated.sort_index(),
         ]
     )
+
+
+def read_combined() -> pd.DataFrame:
+    ncg_consumption, gaspool_consumption, the_consumption = read_consumption()
+    consumption_data = pd.concat([ncg_consumption + gaspool_consumption, the_consumption]).rename('consumption')
+
+    temperature_data = read_temperatures()
+
+    # Temperature data capped at 18 degrees ( min(18, temperature)))
+    temperature_data_capped = temperature_data.apply(lambda x: min(18.0, x)).rename('temperature_capped')
+
+    ncg_prices, gaspool_prices, the_prices = read_imbalance_prices()
+    prices = pd.concat([(ncg_prices + gaspool_prices).dropna() / 2, the_prices]).rename('imbalance_prices')
+
+    electricity_prices = read_electricity_prices()
+    crude_oil_prices = read_crude_oil_prices()
+
+    eua_auctions = read_eua_auctions()
+
+    storage_levels = read_storage_levels()
+
+    # Cobine to DataFrame
+    ts_data_raw = pd.concat(
+        [
+            temperature_data,
+            temperature_data_capped,
+            prices,
+            electricity_prices,
+            crude_oil_prices,
+            eua_auctions,
+            storage_levels,
+            consumption_data,
+        ],
+        axis=1,
+    )
+
+    # Add weekend column
+    ts_data_raw["weekend"] = (ts_data_raw.index.weekday > 4).astype(float)
+
+    return ts_data_raw.sort_index()
