@@ -101,8 +101,18 @@ class LSTM(nn.Module):
 
 if __name__ == "__main__":
 
-    # load the model from disk
-    model = torch.load("lstm_model.ckpt")
+    # Create dummy data
+    X, y = LSTMHelper.create_dummy_train_test_set()
+
+    # Create LSTM model
+    input_size = 1
+    hidden_size = 10
+    num_layers = 3
+    num_classes = 1
+    model = LSTM(num_classes, input_size, hidden_size, num_layers)
+
+    # Train the model
+    model = LSTMHelper.train_lstm(model, 150)
 
     # Make a rolling window prediction
     predictions = []
