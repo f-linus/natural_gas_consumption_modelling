@@ -56,7 +56,7 @@ class LSTMHelper:
             if (epoch + 1) % 10 == 0:
                 print(f"Epoch: {epoch+1}/{epochs}, Loss: {loss.item():.4f}")
         
-        model.eval()            
+        model.eval()
         return model
 
 
