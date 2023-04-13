@@ -5,7 +5,7 @@ class NeuralProphetForecaster:
         self.historic_data = historic_data
         self.forecasted_temperature = forecasted_temperature
 
-    def __fit(self) -> None:
+    def fit(self) -> None:
         pass
 
     def __prepare_prediction(self) -> None:
