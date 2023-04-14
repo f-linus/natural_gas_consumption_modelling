@@ -32,13 +32,18 @@ class TemperatureForecaster:
         # Save model
         nprophet.save(model, model_file)
 
+        self.model = model
+
         return metrics
+
+    def load_model(self, model_file: str = "models/temperature_model.pkl") -> None:
+        
+        # Load model
+        self.model = nprophet.load(model_file)
 
     def predict(self) -> pd.DataFrame:
         return None
     
-    def load_model(self, model_file: str = "models/temperature_model.pkl") -> None:
-        pass
 
 if __name__ == "__main__":    
     print("Hello")
