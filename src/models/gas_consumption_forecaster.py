@@ -1,6 +1,6 @@
 import pandas as pd
 
-class NeuralProphetForecaster:
+class GasConsumptionForecaster:
     def __init__(self, historic_data: pd.DataFrame, forecasted_temperature: pd.DataFrame) -> None:
         self.historic_data = historic_data
         self.forecasted_temperature = forecasted_temperature
