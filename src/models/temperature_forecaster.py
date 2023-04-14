@@ -7,11 +7,11 @@ import requests
 
 open_meteo_endpoint = "https://api.open-meteo.com/v1/forecast"
 weather_data_cities = [
-    (52.520008, 13.404954), # Berlin
-    (51.339695, 12.373075), # Dresden
-    (50.937531, 6.960279), # Cologne
-    (48.135125, 11.581981), # Munich
-    (53.551086, 9.993682), # Hamburg
+    (52.520008, 13.404954),  # Berlin
+    (51.339695, 12.373075),  # Dresden
+    (50.937531, 6.960279),  # Cologne
+    (48.135125, 11.581981),  # Munich
+    (53.551086, 9.993682),  # Hamburg
 ]
 
 
@@ -35,7 +35,7 @@ class TemperatureForecaster:
         model = nprophet.NeuralProphet(
             n_forecasts=365,
             n_lags=45,
-        )        
+        )
 
         # Fit model
         metrics = model.fit(train, freq="D")
@@ -48,7 +48,7 @@ class TemperatureForecaster:
         return metrics
 
     def load_model(self, model_file: str = "models/temperature_model.pkl") -> None:
-        
+
         # Load model
         self.model = nprophet.load(model_file)
 
@@ -65,8 +65,10 @@ class TemperatureForecaster:
             }
             response = requests.get(open_meteo_endpoint, params=params)
             data = response.json()
-            
-            temps = pd.Series(data["hourly"]["temperature_2m"], index=data["hourly"]["time"])
+
+            temps = pd.Series(
+                data["hourly"]["temperature_2m"], index=data["hourly"]["time"]
+            )
             hourly_temperatures[city] = temps
 
         hourly_temperatures = hourly_temperatures.mean(axis="columns")
@@ -79,10 +81,9 @@ class TemperatureForecaster:
 
         return daily_temperatures
 
-
     def predict(self) -> pd.DataFrame:
         return None
-    
 
-if __name__ == "__main__":    
+
+if __name__ == "__main__":
     print("Hello")
