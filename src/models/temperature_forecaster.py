@@ -3,6 +3,7 @@ import pickle as pkl
 from src.data_handling import ingestion
 import neuralprophet as nprophet
 import requests
+import os
 
 
 open_meteo_endpoint = "https://api.open-meteo.com/v1/forecast"
@@ -49,8 +50,13 @@ class TemperatureForecaster:
 
     def load_model(self, model_file: str = "models/temperature_model.pkl") -> None:
 
+        if not os.path.exists(model_file):
+            return False
+
         # Load model
         self.model = nprophet.load(model_file)
+
+        return True
 
     @staticmethod
     def __get_current_weather_data() -> pd.Series:
