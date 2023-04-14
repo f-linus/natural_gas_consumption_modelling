@@ -10,6 +10,14 @@ Copernicus Climate Change Service (2020): Climate and energy indicators for Euro
 
 https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-energy-derived-reanalysis
 
+#### Current weather and current weather forecats
+
+Open-Meteo: Free Weather API
+
+https://open-meteo.com/
+
+License: https://open-meteo.com/en/features#terms
+
 ### Energy commodity prices
 
 #### Natural gas
