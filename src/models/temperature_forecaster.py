@@ -17,8 +17,8 @@ weather_data_cities = [
 
 
 class TemperatureForecaster:
-    def __init__() -> None:
-        pass
+    def __init__(self):
+        self.model = None
 
     def fit(self, model_file) -> None:
 
@@ -60,6 +60,10 @@ class TemperatureForecaster:
 
     @staticmethod
     def __get_current_weather_data() -> pd.Series:
+
+        # Get temperature data for all cities (each city is one column in the resulting dataframe)
+        hourly_temperatures = pd.DataFrame()
+
         for city in weather_data_cities:
             params = {
                 "latitude": city[0],
@@ -87,9 +91,44 @@ class TemperatureForecaster:
 
         return daily_temperatures
 
-    def predict(self) -> pd.DataFrame:
-        return None
+    def cobmined_forecast(self) -> pd.DataFrame:
+
+        # Get current weather data
+        current_weather_data = self.__get_current_weather_data()
+
+        actual_temp_df = current_weather_data.rename("y").to_frame()
+        actual_temp_df.index.name = "ds"
+        actual_temp_df = actual_temp_df.reset_index()
+
+        future = self.model.make_future_dataframe(
+            actual_temp_df, n_historic_predictions=30
+        )
+        prediction = self.model.predict(future)
+        latest_prediction = self.model.get_latest_forecast(prediction).set_index("ds")
+
+        # Combine data
+        current_weather_data = current_weather_data.rename("temperature").to_frame()
+        current_weather_data["model"] = "ECMWF IFS"
+
+        latest_prediction = (
+            latest_prediction["origin-0"].rename("temperature").to_frame()
+        )
+        latest_prediction["model"] = "NeuralProphet long-term"
+
+        combined_forecast = pd.concat([current_weather_data, latest_prediction])
+        combined_forecast = combined_forecast.sort_index()
+
+        return combined_forecast
 
 
 if __name__ == "__main__":
-    print("Hello")
+    temperature_forecaster = TemperatureForecaster()
+
+    loaded = temperature_forecaster.load_model()
+
+    if not loaded:
+        temperature_forecaster.fit()
+
+    forecast = temperature_forecaster.cobmined_forecast()
+
+    exit()
