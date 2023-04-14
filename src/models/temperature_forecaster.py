@@ -21,6 +21,11 @@ class TemperatureForecaster:
         self.model = None
 
     def fit(self, model_file) -> None:
+        """Fit model and save it to disk.
+
+        Args:
+            model_file (str): Where to save the model.
+        """
 
         # Read temperature data
         temperatures = ingestion.read_temperatures()
@@ -49,6 +54,11 @@ class TemperatureForecaster:
         return metrics
 
     def load_model(self, model_file: str = "models/temperature_model.pkl") -> None:
+        """Load model from disk.
+
+        Args:
+            model_file (str, optional): Where to load the model from. Defaults to "models/temperature_model.pkl".
+        """
 
         if not os.path.exists(model_file):
             return False
@@ -60,6 +70,7 @@ class TemperatureForecaster:
 
     @staticmethod
     def __get_current_weather_data() -> pd.Series:
+        """Get current weather data from open-meteo.com."""
 
         # Get temperature data for all cities (each city is one column in the resulting dataframe)
         hourly_temperatures = pd.DataFrame()
@@ -92,6 +103,11 @@ class TemperatureForecaster:
         return daily_temperatures
 
     def cobmined_forecast(self) -> pd.DataFrame:
+        """Combine current weather data with forecast.
+
+        Returns:
+            pd.DataFrame: Dataframe containing the current weather data and the forecast.
+        """
 
         # Get current weather data
         current_weather_data = self.__get_current_weather_data()
