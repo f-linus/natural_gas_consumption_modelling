@@ -3,3 +3,4 @@ natural_gas_consumption_modelling.code-workspace
 src/**/__pycache__/*.*
 lightning_logs/**
 *.ckpt
+models/temperature_model.pkl
