@@ -24,6 +24,13 @@
             "request": "launch",
             "module": "src.data_handling.temperature_data",
             "justMyCode": true
+        },
+        {
+            "name": "Python: Module (src.consumption_forecast_pipeline)",
+            "type": "python",
+            "request": "launch",
+            "module": "src.consumption_forecast_pipeline",
+            "justMyCode": true
         }
     ]
 }
