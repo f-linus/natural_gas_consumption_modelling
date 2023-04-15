@@ -4,6 +4,7 @@ import pandas as pd
 from src.data_handling import consumption_data
 from src.data_handling import temperature_data
 from src.models import temperature_forecaster
+from src.models import consumption_forecaster
 
 
 class ConsumptionForecastPipeline:
@@ -136,12 +137,44 @@ class ConsumptionForecastPipeline:
 
         # Write the database to db.json
         self.__write_json_db(db)
+    
+    def __create_new_consumption_forecast(self) -> None:
+        
+        # Get the last two years of consumption data
+        db = self.__get_json_db()
+        consumption_data = pd.DataFrame.from_dict(db["historic_consumption_data"], orient="index").squeeze()
+
+        # Index to datetime
+        consumption_data.index = pd.to_datetime(consumption_data.index)
+
+        # Filter for the last two years
+        consumption_data = consumption_data[
+            consumption_data.index > pd.Timestamp.now() - pd.Timedelta(weeks=104)
+        ]
+
+        # Get the last two years of temperature data
+        temperature_data = pd.DataFrame.from_dict(db["historic_temperature_data"], orient="index").squeeze()
+
+        # Index to datetime
+        temperature_data.index = pd.to_datetime(temperature_data.index)
+
+        # Filter for the last two years
+        temperature_data = temperature_data[
+            temperature_data.index > pd.Timestamp.now() - pd.Timedelta(weeks=104)
+        ]
+
+        # Create the consumption forecasting instance
+        consumption_forecasting_instance = consumption_forecaster.ConsumptionForecaster()
+        consumption_forecasting_instance.train(
+            historic_consumption=consumption_data, historic_temperatures=temperature_data
+        )
+
 
     def run(self) -> None:
         self.__get_newest_consumption_data()
         self.__get_newest_temperature_data()
         self.__create_new_temperature_forecast()
-        # self.__create_new_consumption_forecast()
+        self.__create_new_consumption_forecast()
 
 
 if __name__ == "__main__":
