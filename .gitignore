@@ -4,3 +4,4 @@ src/**/__pycache__/*.*
 lightning_logs/**
 *.ckpt
 models/temperature_model.pkl
+db.json
