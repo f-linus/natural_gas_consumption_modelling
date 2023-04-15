@@ -3,6 +3,7 @@ import os
 import pandas as pd
 from src.data_handling import consumption_data
 from src.data_handling import temperature_data
+from src.models import temperature_forecaster
 
 
 class ConsumptionForecastPipeline:
@@ -40,9 +41,7 @@ class ConsumptionForecastPipeline:
             )
         else:
             # If no consumption data is in the database, get the data two years + 1 week back
-            newest_consumption_data_date = pd.Timestamp.now() - pd.Timedelta(
-                weeks=104
-            )
+            newest_consumption_data_date = pd.Timestamp.now() - pd.Timedelta(weeks=104)
 
         # Calculate how many days of data we need to get (the -1 because we will never have todays value)
         days_to_get = (pd.Timestamp.now() - newest_consumption_data_date).days - 1
@@ -55,9 +54,11 @@ class ConsumptionForecastPipeline:
         # if newest_consumption date is today, do nothing
         if days_to_get == 0:
             return
-        
+
         # Get the newest consumption data
-        new_consumption_data = consumption_data.get_consumption_data(start_date=newest_consumption_data_date + pd.Timedelta(days=1))
+        new_consumption_data = consumption_data.get_consumption_data(
+            start_date=newest_consumption_data_date + pd.Timedelta(days=1)
+        )
 
         # Update the database
         if "historic_consumption_data" not in db:
@@ -68,7 +69,7 @@ class ConsumptionForecastPipeline:
 
         # Write the database to db.json
         self.__write_json_db(db)
-        
+
     def __get_newest_temperature_data(self) -> None:
 
         # Check what the newest temperature data is in the database
@@ -82,9 +83,7 @@ class ConsumptionForecastPipeline:
             )
         else:
             # If no temperature data is in the database, get the data two years + 1 week back
-            newest_temperature_data_date = pd.Timestamp.now() - pd.Timedelta(
-                weeks=104
-            )
+            newest_temperature_data_date = pd.Timestamp.now() - pd.Timedelta(weeks=104)
 
         # Calculate how many days of data we need to get (the -1 because we will never have todays value)
         days_to_get = (pd.Timestamp.now() - newest_temperature_data_date).days - 1
@@ -97,9 +96,12 @@ class ConsumptionForecastPipeline:
         # if newest_temperature date is today, do nothing
         if days_to_get == 0:
             return
-        
+
         # Get the newest temperature data
-        new_temperature_data = temperature_data.get_temperature_data(start_date=newest_temperature_data_date + pd.Timedelta(days=1), end_date=pd.Timestamp.now())
+        new_temperature_data = temperature_data.get_temperature_data(
+            start_date=newest_temperature_data_date + pd.Timedelta(days=1),
+            end_date=pd.Timestamp.now(),
+        )
 
         # Update the database
         if "historic_temperature_data" not in db:
@@ -111,11 +113,34 @@ class ConsumptionForecastPipeline:
         # Write the database to db.json
         self.__write_json_db(db)
 
+    def __create_new_temperature_forecast(self) -> None:
+
+        temperature_forecasting_instance = (
+            temperature_forecaster.TemperatureForecaster()
+        )
+        loaded = temperature_forecasting_instance.load_model()
+
+        if not loaded:
+            temperature_forecasting_instance.fit()
+
+        forecast = temperature_forecasting_instance.cobmined_forecast()
+
+        # Update the database
+        db = self.__get_json_db()
+
+        if "temperature_forecast" not in db:
+            db["temperature_forecast"] = {}
+
+        forecast.index = forecast.index.strftime("%Y-%m-%d")
+        db["temperature_forecast"].update(forecast.to_dict(orient="index"))
+
+        # Write the database to db.json
+        self.__write_json_db(db)
 
     def run(self) -> None:
         self.__get_newest_consumption_data()
         self.__get_newest_temperature_data()
-        # self.__create_new_temperature_forecast()
+        self.__create_new_temperature_forecast()
         # self.__create_new_consumption_forecast()
 
 
