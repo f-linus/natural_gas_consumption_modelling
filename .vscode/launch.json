@@ -10,6 +10,13 @@
             "request": "launch",
             "module": "src.models.temperature_forecaster",
             "justMyCode": true
+        },
+        {
+            "name": "Python: Module (src.data_handling.realtime_consumption_data)",
+            "type": "python",
+            "request": "launch",
+            "module": "src.data_handling.realtime_consumption_data",
+            "justMyCode": true
         }
     ]
 }
