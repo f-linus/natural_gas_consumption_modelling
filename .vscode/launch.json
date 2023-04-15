@@ -12,10 +12,17 @@
             "justMyCode": true
         },
         {
-            "name": "Python: Module (src.data_handling.realtime_consumption_data)",
+            "name": "Python: Module (src.data_handling.consumption_data)",
             "type": "python",
             "request": "launch",
-            "module": "src.data_handling.realtime_consumption_data",
+            "module": "src.data_handling.consumption_data",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Module (src.data_handling.temperature_data)",
+            "type": "python",
+            "request": "launch",
+            "module": "src.data_handling.temperature_data",
             "justMyCode": true
         }
     ]
