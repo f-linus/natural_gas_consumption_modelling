@@ -10,7 +10,7 @@ Copernicus Climate Change Service (2020): Climate and energy indicators for Euro
 
 https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-energy-derived-reanalysis
 
-Open_meteo: Historical Weather API
+Open-Meteo: Historical Weather API
 
 https://open-meteo.com/
 
