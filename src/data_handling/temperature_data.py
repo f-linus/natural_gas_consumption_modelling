@@ -47,7 +47,7 @@ def get_temperature_data(
     # Group hourly temperatures by day
     daily_temperatures = hourly_temperatures.groupby(pd.Grouper(freq="D")).mean()
 
-    return daily_temperatures
+    return daily_temperatures.dropna()
 
 
 if __name__ == "__main__":
