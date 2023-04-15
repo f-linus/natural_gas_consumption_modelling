@@ -51,7 +51,13 @@ def get_temperature_data(
     daily_temperatures_historic = daily_temperatures.dropna()
 
     # Estimate how many days until today are missing
-    days_missing = (pd.Timestamp.now() - daily_temperatures_historic.index[-1]).days - 1
+    if daily_temperatures_historic.empty:
+        days_missing = (pd.Timestamp.now() - start_date).days
+    else:
+        days_missing = (pd.Timestamp.now() - daily_temperatures_historic.index[-1]).days
+
+    if days_missing <= 0:
+        return daily_temperatures_historic
 
     # Get forecast data
     # Get temperature data for all cities (each city is one column in the resulting dataframe)
