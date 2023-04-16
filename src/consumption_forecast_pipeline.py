@@ -137,12 +137,14 @@ class ConsumptionForecastPipeline:
 
         # Write the database to db.json
         self.__write_json_db(db)
-    
+
     def __create_new_consumption_forecast(self) -> None:
-        
+
         # Get the last two years of consumption data
         db = self.__get_json_db()
-        consumption_data = pd.DataFrame.from_dict(db["historic_consumption_data"], orient="index").squeeze()
+        consumption_data = pd.DataFrame.from_dict(
+            db["historic_consumption_data"], orient="index"
+        ).squeeze()
 
         # Index to datetime
         consumption_data.index = pd.to_datetime(consumption_data.index)
@@ -153,7 +155,9 @@ class ConsumptionForecastPipeline:
         ]
 
         # Get the last two years of temperature data
-        temperature_data = pd.DataFrame.from_dict(db["historic_temperature_data"], orient="index").squeeze()
+        temperature_data = pd.DataFrame.from_dict(
+            db["historic_temperature_data"], orient="index"
+        ).squeeze()
 
         # Index to datetime
         temperature_data.index = pd.to_datetime(temperature_data.index)
@@ -164,11 +168,70 @@ class ConsumptionForecastPipeline:
         ]
 
         # Create the consumption forecasting instance
-        consumption_forecasting_instance = consumption_forecaster.ConsumptionForecaster()
-        consumption_forecasting_instance.train(
-            historic_consumption=consumption_data, historic_temperatures=temperature_data
+        consumption_forecasting_instance = (
+            consumption_forecaster.ConsumptionForecaster()
         )
 
+        # Train the model
+        consumption_forecasting_instance.train(
+            historic_consumption=consumption_data,
+            historic_temperatures=temperature_data,
+        )
+
+        # Get temperature values for the 365 days after the training period
+        forecast_horizon_start = min(
+            [consumption_data.index.max(), temperature_data.index.max()]
+        ) + pd.Timedelta(days=1)
+
+        forecasted_temperatures = pd.DataFrame.from_dict(
+            db["temperature_forecast"], orient="index"
+        )
+        forecasted_temperatures.index = pd.to_datetime(
+            forecasted_temperatures.index
+        )  # Index from string to datetime
+
+        # Use actual historic temperatures if possible (will only be possible if consumption data lags behind)
+        historic_temperatures_in_forecast_horizon = temperature_data[
+            temperature_data.index >= forecast_horizon_start
+        ]
+
+        if historic_temperatures_in_forecast_horizon.empty:
+            forecasted_temperatures_used_from = forecast_horizon_start
+        else:
+            forecasted_temperatures_used_from = (
+                historic_temperatures_in_forecast_horizon.index.max()
+                + pd.Timedelta(days=1)
+            )
+
+        forecast_horizon_temperatures = pd.concat(
+            [
+                historic_temperatures_in_forecast_horizon,
+                forecasted_temperatures.loc[
+                    forecasted_temperatures.index >= forecasted_temperatures_used_from,
+                    "temperature",
+                ],
+            ]
+        )
+
+        # Limit to 365day time horizon
+        forecast_horizon_temperatures = forecast_horizon_temperatures.iloc[:365]
+
+        # Forecast natural gas consumption
+        forecasted_gas_consumption = consumption_forecasting_instance.forecast(
+            forecast_horizon_temperatures
+        )
+
+        # Save forecasted natural gas consumption in database
+        if "natural_gas_consumption_forecast" not in db:
+            db["natural_gas_consumption_forecast"] = {}
+
+        forecasted_gas_consumption.index = forecasted_gas_consumption.index.strftime(
+            "%Y-%m-%d"
+        )
+        db["natural_gas_consumption_forecast"].update(
+            forecasted_gas_consumption.to_dict()
+        )
+        self.__write_json_db(db)
 
     def run(self) -> None:
         self.__get_newest_consumption_data()
