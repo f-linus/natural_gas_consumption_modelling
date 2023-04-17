@@ -22,8 +22,8 @@ class ConsumptionForecastPipeline:
         # If there is no consumption data in the database, get the data two years + 1 week back
 
         if "historic_consumption_data" in self.db:
-            newest_consumption_data_date = max(
-                self.db["historic_consumption_data"].keys()
+            newest_consumption_data_date = pd.to_datetime(
+                max(self.db["historic_consumption_data"].keys())
             )
         else:
             # If no consumption data is in the database, get the data two years + 1 week back
@@ -50,6 +50,7 @@ class ConsumptionForecastPipeline:
         if "historic_consumption_data" not in self.db:
             self.db["historic_consumption_data"] = {}
 
+        new_consumption_data.index = new_consumption_data.index.strftime("%Y-%m-%d")
         self.db["historic_consumption_data"].update(new_consumption_data.to_dict())
 
         # Persist database
@@ -61,10 +62,9 @@ class ConsumptionForecastPipeline:
         # If there is no temperature data in the database, get the data two years + 1 week back
 
         if "historic_temperature_data" in self.db:
-            newest_temperature_data_date = max(
-                self.db["historic_temperature_data"].keys()
+            newest_temperature_data_date = pd.to_datetime(
+                max(self.db["historic_temperature_data"].keys())
             )
-
         else:
             # If no temperature data is in the database, get the data two years + 1 week back
             newest_temperature_data_date = pd.Timestamp.now() - pd.Timedelta(weeks=104)
@@ -91,6 +91,7 @@ class ConsumptionForecastPipeline:
         if "historic_temperature_data" not in self.db:
             self.db["historic_temperature_data"] = {}
 
+        new_temperature_data.index = new_temperature_data.index.strftime("%Y-%m-%d")
         self.db["historic_temperature_data"].update(new_temperature_data.to_dict())
 
         # Persist the database
@@ -111,6 +112,7 @@ class ConsumptionForecastPipeline:
         if "temperature_forecast" not in self.db:
             self.db["temperature_forecast"] = {}
 
+        forecast.index = forecast.index.strftime("%Y-%m-%d")
         self.db["temperature_forecast"].update(forecast.to_dict(orient="index"))
 
         # Persist database
@@ -123,6 +125,9 @@ class ConsumptionForecastPipeline:
             self.db["historic_consumption_data"], orient="index"
         ).squeeze()
 
+        # Index to datetime
+        consumption_data.index = pd.to_datetime(consumption_data.index)
+
         # Filter for the last two years
         consumption_data = consumption_data[
             consumption_data.index > pd.Timestamp.now() - pd.Timedelta(weeks=104)
@@ -132,6 +137,9 @@ class ConsumptionForecastPipeline:
         temperature_data = pd.DataFrame.from_dict(
             self.db["historic_temperature_data"], orient="index"
         ).squeeze()
+
+        # Index to datetime
+        temperature_data.index = pd.to_datetime(temperature_data.index)
 
         # Filter for the last two years
         temperature_data = temperature_data[
@@ -157,6 +165,9 @@ class ConsumptionForecastPipeline:
         forecasted_temperatures = pd.DataFrame.from_dict(
             self.db["temperature_forecast"], orient="index"
         )
+        forecasted_temperatures.index = pd.to_datetime(
+            forecasted_temperatures.index
+        )  # Index from string to datetime
 
         # Use actual historic temperatures if possible (will only be possible if consumption data lags behind)
         historic_temperatures_in_forecast_horizon = temperature_data[
@@ -193,11 +204,14 @@ class ConsumptionForecastPipeline:
         if "natural_gas_consumption_forecast" not in self.db:
             self.db["natural_gas_consumption_forecast"] = {}
 
+        forecasted_gas_consumption.index = forecasted_gas_consumption.index.strftime(
+            "%Y-%m-%d"
+        )
         self.db["natural_gas_consumption_forecast"].update(
             forecasted_gas_consumption.to_dict()
         )
 
-        self.db["last_consumption_forecast"] = pd.Timestamp.now()
+        self.db["last_consumption_forecast"] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Persist database
         self.__persist_db()
