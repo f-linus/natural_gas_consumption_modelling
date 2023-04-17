@@ -22,7 +22,9 @@ class ConsumptionForecastPipeline:
         # If there is no consumption data in the database, get the data two years + 1 week back
 
         if "historic_consumption_data" in self.db:
-            newest_consumption_data_date = max(self.db["historic_consumption_data"].keys())
+            newest_consumption_data_date = max(
+                self.db["historic_consumption_data"].keys()
+            )
         else:
             # If no consumption data is in the database, get the data two years + 1 week back
             newest_consumption_data_date = pd.Timestamp.now() - pd.Timedelta(weeks=104)
@@ -59,8 +61,10 @@ class ConsumptionForecastPipeline:
         # If there is no temperature data in the database, get the data two years + 1 week back
 
         if "historic_temperature_data" in self.db:
-            newest_temperature_data_date = max(self.db["historic_temperature_data"].keys())
-            
+            newest_temperature_data_date = max(
+                self.db["historic_temperature_data"].keys()
+            )
+
         else:
             # If no temperature data is in the database, get the data two years + 1 week back
             newest_temperature_data_date = pd.Timestamp.now() - pd.Timedelta(weeks=104)
