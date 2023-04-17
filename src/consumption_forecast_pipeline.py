@@ -231,6 +231,9 @@ class ConsumptionForecastPipeline:
         db["natural_gas_consumption_forecast"].update(
             forecasted_gas_consumption.to_dict()
         )
+
+        db["last_consumption_forecast"] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+
         self.__write_json_db(db)
 
     def run(self) -> None:
