@@ -31,6 +31,13 @@
             "request": "launch",
             "module": "src.consumption_forecast_pipeline",
             "justMyCode": true
+        },
+        {
+            "name": "Python: Module (src.app)",
+            "type": "python",
+            "request": "launch",
+            "module": "src.app",
+            "justMyCode": true
         }
     ]
 }
