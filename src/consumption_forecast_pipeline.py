@@ -1,6 +1,8 @@
 import os
+from google.cloud import storage
 import pandas as pd
 import pickle as pkl
+import json
 from src.data_handling import consumption_data
 from src.data_handling import temperature_data
 from src.models import temperature_forecaster
@@ -8,13 +10,31 @@ from src.models import consumption_forecaster
 
 
 class ConsumptionForecastPipeline:
-    def __init__(self, db: dict, verbose=False) -> None:
+    def __init__(self, db: dict, storage_backend: str = "local", verbose=False) -> None:
         self.db = db
+        self.storage_backend = storage_backend
         self.verbose = verbose
 
+        # Create Google Cloud Storage client if needed
+        if self.storage_backend == "google_cloud_storage":
+            self.storage_client = storage.Client()
+            self.bucket = self.storage_client.get_bucket("natural_gas_consumption_modelling")
+
     def __persist_db(self):
-        with open("db.pkl", "wb") as f:
-            pkl.dump(self.db, f)
+
+        if self.storage_backend == "google_cloud_storage":
+            
+            # Save database as JSON in a Google Cloud Storage blob
+            db_json = json.dumps(self.db)
+            storage.Blob("db", self.bucket).upload_from_string(db_json)
+
+        elif self.storage_backend == "local":
+            with open("db.pkl", "wb") as f:
+                pkl.dump(self.db, f)
+        else:
+            raise ValueError(
+                f"Storage backend {self.storage_backend} is not supported. Please use 'google_cloud_storage' or 'local'"
+            )
 
     def __get_newest_consumption_data(self) -> None:
 
@@ -211,7 +231,9 @@ class ConsumptionForecastPipeline:
             forecasted_gas_consumption.to_dict()
         )
 
-        self.db["last_consumption_forecast"] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.db["last_consumption_forecast"] = pd.Timestamp.now().strftime(
+            "%Y-%m-%d %H:%M:%S"
+        )
 
         # Persist database
         self.__persist_db()

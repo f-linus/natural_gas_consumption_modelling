@@ -4,6 +4,10 @@ import pickle as pkl
 import pandas as pd
 from src import consumption_forecast_pipeline
 import os
+from google.cloud import storage
+import json
+
+storage_backend = "google_cloud_storage"
 
 app = Flask(__name__)
 CORS(app)
@@ -26,7 +30,7 @@ def model_run():
             }
 
     pipeline = consumption_forecast_pipeline.ConsumptionForecastPipeline(
-        db=db, verbose=True
+        db=db, storage_backend=storage_backend, verbose=True
     )
     pipeline.run()
 
@@ -44,8 +48,25 @@ def get():
 
 
 if __name__ == "__main__":
-    # Check if persisted database exists
-    if os.path.exists("db.pkl"):
-        db = pkl.load(open("db.pkl", "rb"))
+    if storage_backend == "google_cloud_storage":
+
+        # Connect to Google Cloud Storage
+        storage_client = storage.Client()
+        bucket = storage_client.get_bucket("natural_gas_consumption_modelling")
+
+        # Check if persisted database exists
+        if storage.Blob("db", bucket).exists():
+            db_json = storage.Blob("db", bucket).download_as_string()
+            db = json.loads(db_json)
+
+    elif storage_backend == "local":
+        # Check if persisted database exists
+        if os.path.exists("db.pkl"):
+            db = pkl.load(open("db.pkl", "rb"))
+
+    else:
+        raise ValueError(
+            f"Storage backend {storage_backend} is not supported. Please use 'google_cloud_storage' or 'local'"
+        )
 
     app.run(debug=True, host="localhost", port=int(os.environ.get("PORT", 8080)))
