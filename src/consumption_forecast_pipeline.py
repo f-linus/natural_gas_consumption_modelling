@@ -1,6 +1,6 @@
-import json
 import os
 import pandas as pd
+import pickle as pkl
 from src.data_handling import consumption_data
 from src.data_handling import temperature_data
 from src.models import temperature_forecaster
@@ -8,38 +8,21 @@ from src.models import consumption_forecaster
 
 
 class ConsumptionForecastPipeline:
-    def __init__(self, storage_backend: str = "firestore", verbose=False) -> None:
-        self.storage_backend = storage_backend
+    def __init__(self, db: dict, verbose=False) -> None:
+        self.db = db
         self.verbose = verbose
 
-    def __get_json_db(self) -> None:
-
-        # Check if the database exists
-        # If not, return empty dict
-        if not os.path.exists("db.json"):
-            return {}
-
-        # Get the JSON database from db.json
-        with open("db.json", "r") as f:
-            return json.load(f)
-
-    def __write_json_db(self, db: dict) -> None:
-
-        # Write the JSON database to db.json
-        with open("db.json", "w") as f:
-            json.dump(db, f, indent=4)
+    def __persist_db(self):
+        with open("db.pkl", "wb") as f:
+            pkl.dump(self.db, f)
 
     def __get_newest_consumption_data(self) -> None:
 
         # Check what the newest consumption data is in the database
         # If there is no consumption data in the database, get the data two years + 1 week back
 
-        db = self.__get_json_db()
-
-        if "historic_consumption_data" in db:
-            newest_consumption_data_date = pd.to_datetime(
-                max(db["historic_consumption_data"].keys())
-            )
+        if "historic_consumption_data" in self.db:
+            newest_consumption_data_date = max(self.db["historic_consumption_data"].keys())
         else:
             # If no consumption data is in the database, get the data two years + 1 week back
             newest_consumption_data_date = pd.Timestamp.now() - pd.Timedelta(weeks=104)
@@ -62,26 +45,22 @@ class ConsumptionForecastPipeline:
         )
 
         # Update the database
-        if "historic_consumption_data" not in db:
-            db["historic_consumption_data"] = {}
+        if "historic_consumption_data" not in self.db:
+            self.db["historic_consumption_data"] = {}
 
-        new_consumption_data.index = new_consumption_data.index.strftime("%Y-%m-%d")
-        db["historic_consumption_data"].update(new_consumption_data.to_dict())
+        self.db["historic_consumption_data"].update(new_consumption_data.to_dict())
 
-        # Write the database to db.json
-        self.__write_json_db(db)
+        # Persist database
+        self.__persist_db()
 
     def __get_newest_temperature_data(self) -> None:
 
         # Check what the newest temperature data is in the database
         # If there is no temperature data in the database, get the data two years + 1 week back
 
-        db = self.__get_json_db()
-
-        if "historic_temperature_data" in db:
-            newest_temperature_data_date = pd.to_datetime(
-                max(db["historic_temperature_data"].keys())
-            )
+        if "historic_temperature_data" in self.db:
+            newest_temperature_data_date = max(self.db["historic_temperature_data"].keys())
+            
         else:
             # If no temperature data is in the database, get the data two years + 1 week back
             newest_temperature_data_date = pd.Timestamp.now() - pd.Timedelta(weeks=104)
@@ -105,14 +84,13 @@ class ConsumptionForecastPipeline:
         )
 
         # Update the database
-        if "historic_temperature_data" not in db:
-            db["historic_temperature_data"] = {}
+        if "historic_temperature_data" not in self.db:
+            self.db["historic_temperature_data"] = {}
 
-        new_temperature_data.index = new_temperature_data.index.strftime("%Y-%m-%d")
-        db["historic_temperature_data"].update(new_temperature_data.to_dict())
+        self.db["historic_temperature_data"].update(new_temperature_data.to_dict())
 
-        # Write the database to db.json
-        self.__write_json_db(db)
+        # Persist the database
+        self.__persist_db()
 
     def __create_new_temperature_forecast(self) -> None:
 
@@ -126,28 +104,20 @@ class ConsumptionForecastPipeline:
 
         forecast = temperature_forecasting_instance.cobmined_forecast()
 
-        # Update the database
-        db = self.__get_json_db()
+        if "temperature_forecast" not in self.db:
+            self.db["temperature_forecast"] = {}
 
-        if "temperature_forecast" not in db:
-            db["temperature_forecast"] = {}
+        self.db["temperature_forecast"].update(forecast.to_dict(orient="index"))
 
-        forecast.index = forecast.index.strftime("%Y-%m-%d")
-        db["temperature_forecast"].update(forecast.to_dict(orient="index"))
-
-        # Write the database to db.json
-        self.__write_json_db(db)
+        # Persist database
+        self.__persist_db()
 
     def __create_new_consumption_forecast(self) -> None:
 
         # Get the last two years of consumption data
-        db = self.__get_json_db()
         consumption_data = pd.DataFrame.from_dict(
-            db["historic_consumption_data"], orient="index"
+            self.db["historic_consumption_data"], orient="index"
         ).squeeze()
-
-        # Index to datetime
-        consumption_data.index = pd.to_datetime(consumption_data.index)
 
         # Filter for the last two years
         consumption_data = consumption_data[
@@ -156,11 +126,8 @@ class ConsumptionForecastPipeline:
 
         # Get the last two years of temperature data
         temperature_data = pd.DataFrame.from_dict(
-            db["historic_temperature_data"], orient="index"
+            self.db["historic_temperature_data"], orient="index"
         ).squeeze()
-
-        # Index to datetime
-        temperature_data.index = pd.to_datetime(temperature_data.index)
 
         # Filter for the last two years
         temperature_data = temperature_data[
@@ -184,11 +151,8 @@ class ConsumptionForecastPipeline:
         ) + pd.Timedelta(days=1)
 
         forecasted_temperatures = pd.DataFrame.from_dict(
-            db["temperature_forecast"], orient="index"
+            self.db["temperature_forecast"], orient="index"
         )
-        forecasted_temperatures.index = pd.to_datetime(
-            forecasted_temperatures.index
-        )  # Index from string to datetime
 
         # Use actual historic temperatures if possible (will only be possible if consumption data lags behind)
         historic_temperatures_in_forecast_horizon = temperature_data[
@@ -222,19 +186,17 @@ class ConsumptionForecastPipeline:
         )
 
         # Save forecasted natural gas consumption in database
-        if "natural_gas_consumption_forecast" not in db:
-            db["natural_gas_consumption_forecast"] = {}
+        if "natural_gas_consumption_forecast" not in self.db:
+            self.db["natural_gas_consumption_forecast"] = {}
 
-        forecasted_gas_consumption.index = forecasted_gas_consumption.index.strftime(
-            "%Y-%m-%d"
-        )
-        db["natural_gas_consumption_forecast"].update(
+        self.db["natural_gas_consumption_forecast"].update(
             forecasted_gas_consumption.to_dict()
         )
 
-        db["last_consumption_forecast"] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.db["last_consumption_forecast"] = pd.Timestamp.now()
 
-        self.__write_json_db(db)
+        # Persist database
+        self.__persist_db()
 
     def run(self) -> None:
         self.__get_newest_consumption_data()
@@ -245,6 +207,13 @@ class ConsumptionForecastPipeline:
 
 if __name__ == "__main__":
     print("Debugging consumption_forecast_pipeline.py")
-    pipeline = ConsumptionForecastPipeline(storage_backend="json", verbose=True)
+
+    # Check if persisted database exists
+    if os.path.exists("db.pkl"):
+        db = pkl.load(open("db.pkl", "rb"))
+    else:
+        db = {}
+
+    pipeline = ConsumptionForecastPipeline(db=db, verbose=True)
     pipeline.run()
     exit()
