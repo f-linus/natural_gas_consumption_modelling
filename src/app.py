@@ -69,4 +69,4 @@ if __name__ == "__main__":
             f"Storage backend {storage_backend} is not supported. Please use 'google_cloud_storage' or 'local'"
         )
 
-    app.run(debug=True, host="localhost", port=int(os.environ.get("PORT", 8080)))
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
