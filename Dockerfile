@@ -14,10 +14,10 @@ WORKDIR $APP_HOME
 COPY ./models/temperature_model.pkl ./models/temperature_model.pkl
 COPY ./src/ ./src/
 COPY ./app.py ./app.py
-COPY ./requirements.txt ./backend_requirements.txt
+COPY ./requirements.txt ./requirements.txt
 
 # Install production dependencies.
-RUN pip install --no-cache-dir -r backend_requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
