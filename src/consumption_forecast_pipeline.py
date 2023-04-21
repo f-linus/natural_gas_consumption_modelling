@@ -26,7 +26,11 @@ class ConsumptionForecastPipeline:
             
             # Save database as JSON in a Google Cloud Storage blob
             db_json = json.dumps(self.db)
-            storage.Blob("db", self.bucket).upload_from_string(db_json)
+
+            # Save database as JSON in a Google Cloud Storage blob and make it public
+            blob = storage.Blob("db", self.bucket)
+            blob.upload_from_string(db_json)
+            blob.make_public()
 
         elif self.storage_backend == "local":
             with open("db.pkl", "wb") as f:
