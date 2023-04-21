@@ -13,6 +13,8 @@ bucket = storage_client.get_bucket("natural_gas_consumption_modelling")
 if storage.Blob("db", bucket).exists():
     db_json = storage.Blob("db", bucket).download_as_string()
     db = json.loads(db_json)
+else:
+    db = {}
 
 # Run pipeline
 pipeline = consumption_forecast_pipeline.ConsumptionForecastPipeline(
