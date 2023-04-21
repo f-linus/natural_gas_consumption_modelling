@@ -125,7 +125,7 @@ class ConsumptionForecastPipeline:
         loaded = temperature_forecasting_instance.load_model()
 
         if not loaded:
-            temperature_forecasting_instance.fit()
+            raise Exception("Temperature forecasting model not found!")
 
         forecast = temperature_forecasting_instance.cobmined_forecast()
 
