@@ -11,7 +11,7 @@ ENV APP_HOME /app
 WORKDIR $APP_HOME
 
 # Copy all files from src to the container image.
-COPY ./data/raw/H_ERA5_ECMW_T639_TA-_0002m_Euro_NUT0_S197901010000_E202212312300_INS_TIM_01d_NA-_noc_org_NA_NA---_NA---_NA---.csv ./data/raw/H_ERA5_ECMW_T639_TA-_0002m_Euro_NUT0_S197901010000_E202212312300_INS_TIM_01d_NA-_noc_org_NA_NA---_NA---_NA---.csv
+COPY ./models/temperature_model.pkl ./models/temperature_model.pkl
 COPY ./src/ ./src/
 COPY ./app.py ./app.py
 COPY ./requirements.txt ./backend_requirements.txt
