@@ -19,4 +19,4 @@ COPY ./requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Entrypoint
-CMD ["python", "m", "src.daily_model_run"]
+CMD ["python", "-m", "src.daily_model_run"]
