@@ -1,10 +1,10 @@
 <mxfile host="65bd71144e">
     <diagram id="5its06f3Tkkyak7jn_eK" name="Page-1">
-        <mxGraphModel dx="536" dy="830" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="253" dy="830" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="77" value="" style="whiteSpace=wrap;html=1;rounded=1;fontSize=11;fillColor=none;dashed=1;strokeColor=#7D7D7D;" vertex="1" parent="1">
+                <mxCell id="77" value="" style="whiteSpace=wrap;html=1;rounded=1;fontSize=11;fillColor=none;dashed=1;strokeColor=#7D7D7D;" parent="1" vertex="1">
                     <mxGeometry x="1040" y="240" width="320" height="170" as="geometry"/>
                 </mxCell>
                 <mxCell id="28" value="&lt;font size=&quot;1&quot; style=&quot;&quot;&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;Model pipeline&lt;/span&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=270;" parent="1" vertex="1">
@@ -25,15 +25,15 @@
                 <mxCell id="41" value="&lt;b&gt;4. Create new gas consumption forecast&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;" parent="1" vertex="1">
                     <mxGeometry x="1050" y="370" width="250" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="73" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#990099;startArrow=classic;startFill=1;" edge="1" parent="1" source="44" target="46">
+                <mxCell id="73" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#990099;startArrow=classic;startFill=1;" parent="1" source="44" target="46" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="74" value="&lt;font color=&quot;#000000&quot;&gt;HTTP requests to storage backend&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#990099;" vertex="1" connectable="0" parent="73">
+                <mxCell id="74" value="&lt;font color=&quot;#000000&quot;&gt;HTTP requests to storage backend&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#990099;" parent="73" vertex="1" connectable="0">
                     <mxGeometry x="-0.2444" y="-4" relative="1" as="geometry">
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="75" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fontColor=#990099;startArrow=classic;startFill=1;" edge="1" parent="1" source="44" target="56">
+                <mxCell id="75" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fontColor=#990099;startArrow=classic;startFill=1;" parent="1" source="44" target="56" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="44" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;Frontend&lt;/span&gt;" style="whiteSpace=wrap;html=1;rounded=1;fontSize=11;strokeWidth=1;" parent="1" vertex="1">
@@ -74,11 +74,11 @@
                 <mxCell id="47" value="&lt;ul&gt;&lt;li&gt;Temperature forecast&lt;/li&gt;&lt;li&gt;Consumption forecast&lt;/li&gt;&lt;li&gt;Historic temperatures&lt;/li&gt;&lt;li&gt;Historic consumption&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="1570" y="310" width="180" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="71" value="&lt;font color=&quot;#990099&quot;&gt;&lt;b&gt;Google Cloud Storage bucket&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="71" value="&lt;font color=&quot;#990099&quot;&gt;&lt;b&gt;Google Cloud Storage bucket&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="1420" y="430" width="190" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="76" value="&lt;font color=&quot;#990099&quot;&gt;&lt;b&gt;Next.js app hosted on Vercel&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="1620" y="200" width="190" height="30" as="geometry"/>
+                <mxCell id="76" value="&lt;font color=&quot;#990099&quot;&gt;&lt;b&gt;Next.js app&lt;br&gt;hosted on Vercel&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1619" y="194.5" width="114" height="41" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
