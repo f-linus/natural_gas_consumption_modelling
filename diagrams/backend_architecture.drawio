@@ -1,49 +1,43 @@
 <mxfile host="65bd71144e">
     <diagram id="5its06f3Tkkyak7jn_eK" name="Page-1">
-        <mxGraphModel dx="781" dy="573" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="536" dy="830" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="58" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontSize=12;strokeColor=#4797FF;fillColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="980" y="70" width="730" height="360" as="geometry"/>
+                <mxCell id="77" value="" style="whiteSpace=wrap;html=1;rounded=1;fontSize=11;fillColor=none;dashed=1;strokeColor=#7D7D7D;" vertex="1" parent="1">
+                    <mxGeometry x="1040" y="240" width="320" height="170" as="geometry"/>
                 </mxCell>
                 <mxCell id="28" value="&lt;font size=&quot;1&quot; style=&quot;&quot;&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;Model pipeline&lt;/span&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;rotation=270;" parent="1" vertex="1">
-                    <mxGeometry x="960" y="320" width="130" height="30" as="geometry"/>
+                    <mxGeometry x="960" y="310" width="130" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="37" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;Daily model run&lt;/span&gt;" style="whiteSpace=wrap;html=1;rounded=1;fontSize=11;" parent="1" vertex="1">
-                    <mxGeometry x="1095" y="190" width="180" height="50" as="geometry"/>
+                    <mxGeometry x="1110" y="190" width="180" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="38" value="&lt;b&gt;1. Get up-to-date temperature and consumption data&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;" parent="1" vertex="1">
-                    <mxGeometry x="1050" y="260" width="320" height="30" as="geometry"/>
+                    <mxGeometry x="1050" y="250" width="320" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="39" value="&lt;b&gt;2. Re-train consumption model and updated data&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;" parent="1" vertex="1">
-                    <mxGeometry x="1050" y="300" width="300" height="30" as="geometry"/>
+                    <mxGeometry x="1050" y="290" width="300" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="40" value="&lt;b&gt;3. Create new long-term temperature forecast&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;" parent="1" vertex="1">
-                    <mxGeometry x="1050" y="340" width="280" height="30" as="geometry"/>
+                    <mxGeometry x="1050" y="330" width="280" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="41" value="&lt;b&gt;4. Create new gas consumption forecast&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;" parent="1" vertex="1">
-                    <mxGeometry x="1050" y="380" width="250" height="30" as="geometry"/>
+                    <mxGeometry x="1050" y="370" width="250" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="44" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;Data retrieval&lt;/span&gt;" style="whiteSpace=wrap;html=1;rounded=1;fontSize=11;strokeWidth=1;" parent="1" vertex="1">
-                    <mxGeometry x="1470" y="190" width="180" height="50" as="geometry"/>
+                <mxCell id="73" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#990099;startArrow=classic;startFill=1;" edge="1" parent="1" source="44" target="46">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="45" value="" style="group" parent="1" vertex="1" connectable="0">
-                    <mxGeometry x="1470" y="330" width="350" height="100" as="geometry"/>
-                </mxCell>
-                <mxCell id="46" value="Database" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" parent="45" vertex="1">
-                    <mxGeometry width="90" height="80" as="geometry"/>
-                </mxCell>
-                <mxCell id="47" value="Temperature forecast&lt;br&gt;Consumption forecast&lt;br&gt;Historic temperatures&lt;br&gt;Historic consumption" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="45" vertex="1">
-                    <mxGeometry x="100" y="5" width="140" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="49" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=1;fontSize=12;endSize=6;startSize=6;jumpSize=1;endArrow=blockThin;endFill=1;" parent="1" source="46" target="44" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="1560" y="280"/>
-                            <mxPoint x="1560" y="280"/>
-                        </Array>
+                <mxCell id="74" value="&lt;font color=&quot;#000000&quot;&gt;HTTP requests to storage backend&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#990099;" vertex="1" connectable="0" parent="73">
+                    <mxGeometry x="-0.2444" y="-4" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
                     </mxGeometry>
+                </mxCell>
+                <mxCell id="75" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fontColor=#990099;startArrow=classic;startFill=1;" edge="1" parent="1" source="44" target="56">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;Frontend&lt;/span&gt;" style="whiteSpace=wrap;html=1;rounded=1;fontSize=11;strokeWidth=1;" parent="1" vertex="1">
+                    <mxGeometry x="1425" y="190" width="180" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="50" style="edgeStyle=orthogonalEdgeStyle;jumpSize=1;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;strokeWidth=1;fontSize=12;startSize=6;endSize=6;endArrow=blockThin;endFill=1;" parent="1" source="46" edge="1">
                     <mxGeometry relative="1" as="geometry">
@@ -60,41 +54,31 @@
                         <mxPoint x="1360" y="390" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="53" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=blockThin;endFill=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="54" edge="1" target="64">
+                <mxCell id="53" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=blockThin;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="54" target="37" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="1250" y="80" as="targetPoint"/>
+                        <mxPoint x="1330" y="80" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="54" value="Daily&lt;b&gt; GCP Scheduler HTTP &lt;/b&gt;call" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="1150" width="200" height="30" as="geometry"/>
+                <mxCell id="54" value="Daily&lt;b&gt; GCP Scheduler &lt;/b&gt;call" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1120" y="90" width="160" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="55" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=blockThin;endFill=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" parent="1" source="56" edge="1" target="64">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="1455" y="80" as="targetPoint"/>
-                    </mxGeometry>
+                <mxCell id="56" value="&lt;b&gt;User&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1490" y="90" width="50" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="56" value="&lt;b&gt;HTTP&amp;nbsp;&lt;/b&gt;API calls by frontend" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="1420" width="170" height="30" as="geometry"/>
+                <mxCell id="59" value="&lt;b&gt;Docker container hosted as a GCP Cloud Run Job&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=12;fontColor=#990099;" parent="1" vertex="1">
+                    <mxGeometry x="1050" y="430" width="300" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="59" value="&lt;b&gt;Docker&lt;/b&gt; container hosted as a &lt;b&gt;GCP Cloud Run Job&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=12;" parent="1" vertex="1">
-                    <mxGeometry x="980" y="430" width="300" height="30" as="geometry"/>
+                <mxCell id="46" value="Database" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="1470" y="330" width="90" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="61" value="&lt;b&gt;Docker&lt;/b&gt; container hosted as a &lt;b&gt;GCP Cloud Run Service&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=12;" parent="1" vertex="1">
-                    <mxGeometry x="1430" y="260" width="330" height="30" as="geometry"/>
+                <mxCell id="47" value="&lt;ul&gt;&lt;li&gt;Temperature forecast&lt;/li&gt;&lt;li&gt;Consumption forecast&lt;/li&gt;&lt;li&gt;Historic temperatures&lt;/li&gt;&lt;li&gt;Historic consumption&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1570" y="310" width="180" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="65" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="64" target="37">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="71" value="&lt;font color=&quot;#990099&quot;&gt;&lt;b&gt;Google Cloud Storage bucket&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="1420" y="430" width="190" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="66" value="if last model run was &amp;gt;23h ago" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="65">
-                    <mxGeometry x="0.1707" y="1" relative="1" as="geometry">
-                        <mxPoint as="offset"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="67" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="64" target="44">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="64" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;HTTP endpoint&lt;/span&gt;" style="whiteSpace=wrap;html=1;rounded=1;fontSize=11;" vertex="1" parent="1">
-                    <mxGeometry x="1285" y="80" width="180" height="50" as="geometry"/>
+                <mxCell id="76" value="&lt;font color=&quot;#990099&quot;&gt;&lt;b&gt;Next.js app hosted on Vercel&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="1620" y="200" width="190" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
