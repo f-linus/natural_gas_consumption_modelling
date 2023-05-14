@@ -18,12 +18,12 @@ class ConsumptionForecastPipeline:
         # Create Google Cloud Storage client if needed
         if self.storage_backend == "google_cloud_storage":
             self.storage_client = storage.Client()
-            self.bucket = self.storage_client.get_bucket("natural_gas_consumption_modelling")
+            self.bucket = self.storage_client.get_bucket(
+                "natural_gas_consumption_modelling"
+            )
 
     def __persist_db(self):
-
         if self.storage_backend == "google_cloud_storage":
-            
             # Save database as JSON in a Google Cloud Storage blob
             db_json = json.dumps(self.db)
 
@@ -37,11 +37,10 @@ class ConsumptionForecastPipeline:
                 pkl.dump(self.db, f)
         else:
             raise ValueError(
-                f"Storage backend {self.storage_backend} is not supported. Please use 'google_cloud_storage' or 'local'"
+                f"Storage backend {self.storage_backend} is not supported."
             )
 
     def __get_newest_consumption_data(self) -> None:
-
         # Check what the newest consumption data is in the database
         # If there is no consumption data in the database, get the data two years + 1 week back
 
@@ -53,7 +52,7 @@ class ConsumptionForecastPipeline:
             # If no consumption data is in the database, get the data two years + 1 week back
             newest_consumption_data_date = pd.Timestamp.now() - pd.Timedelta(weeks=104)
 
-        # Calculate how many days of data we need to get (the -1 because we will never have todays value)
+        # Calculate how many days of data we need (-1 because we will never have todays value)
         days_to_get = (pd.Timestamp.now() - newest_consumption_data_date).days - 1
 
         if self.verbose:
@@ -81,7 +80,6 @@ class ConsumptionForecastPipeline:
         self.__persist_db()
 
     def __get_newest_temperature_data(self) -> None:
-
         # Check what the newest temperature data is in the database
         # If there is no temperature data in the database, get the data two years + 1 week back
 
@@ -122,7 +120,6 @@ class ConsumptionForecastPipeline:
         self.__persist_db()
 
     def __create_new_temperature_forecast(self) -> None:
-
         temperature_forecasting_instance = (
             temperature_forecaster.TemperatureForecaster()
         )
@@ -143,7 +140,6 @@ class ConsumptionForecastPipeline:
         self.__persist_db()
 
     def __create_new_consumption_forecast(self) -> None:
-
         # Get the last two years of consumption data
         consumption_data = pd.DataFrame.from_dict(
             self.db["historic_consumption_data"], orient="index"
