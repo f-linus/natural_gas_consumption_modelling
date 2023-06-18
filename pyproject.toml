@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "natural-gas-consumption-modelling"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "natural_gas_consumption_modelling"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+notebook = "^6.5.4"
+pandas = "^2.0.2"
+seaborn = "^0.12.2"
+lxml = "^4.9.2"
+xlrd = "^2.0.1"
+openpyxl = "^3.1.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
