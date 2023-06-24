@@ -101,16 +101,3 @@ class TemperatureForecaster:
         combined_forecast = combined_forecast.sort_index()
 
         return combined_forecast
-
-
-if __name__ == "__main__":
-    temperature_forecaster = TemperatureForecaster()
-
-    loaded = temperature_forecaster.load_model()
-
-    if not loaded:
-        raise Exception("Model not found!")
-
-    forecast = temperature_forecaster.cobmined_forecast()
-
-    exit()
