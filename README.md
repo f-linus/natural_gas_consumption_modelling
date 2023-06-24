@@ -92,9 +92,58 @@ TODO
 
 ## Deploying a new pipeline version on GCP
 
-TODO
+For the example frontend at https://linusfolkerts.com, the pipeline is deployed on GCP.
+
+The model is run daily as a **Cloud Run** Job, triggered through **Cloud Scheduler**. From there,
+the model stores the results in a **Cloud Storage** bucket.
+
+### 1. Activate Google Cloud Run
+
+To use **Cloud Run** you need to activate it. You can do this by following the instructions
+[here](https://cloud.google.com/run/docs/quickstarts/prebuilt-deploy).
+
+### 2. Activate Google Cloud Build
+
+To use **Cloud Build** you need to activate it. You can do this by following the instructions
+[here](https://cloud.google.com/build/docs/quickstart-build).
+
+### 3. Connect repository to Google Cloud Build
+
+To connect the repository to **Cloud Build** follow the instructions
+[here](https://cloud.google.com/build/docs/automating-builds/create-github-app-triggers).
+
+Here, you select this or your forked repository and create a new Cloud Build trigger. This will build
+a new Docker image of the pipeline whenever a new commit is pushed to the repository.
+
+### 4. Create a Cloud Run Job
+
+To create a new **Cloud Run** Job, follow the instructions
+[here](https://cloud.google.com/run/docs/quickstarts/prebuilt-deploy).
+
+Here, you select the Docker image created in the previous step to create a new **Cloud Run** Job that
+executes the whole forecasting pipeline and stores the results in a **Cloud Storage** bucket.
+
+### 5. Create a Cloud Scheduler Job
+
+To trigger the **Cloud Run** Job daily, you can create a **Cloud Scheduler** Job. Follow the
+instructions [here](https://cloud.google.com/scheduler/docs/quickstart).
+
+Here, you select the **Cloud Run** Job created in the previous step and set the frequency to daily.
+For specific instructions on how to trigger the created job, see [here](https://cloud.google.com/run/docs/execute/jobs-on-schedule).
+
+### 6. Make the results bucket public
+
+Now the pipeline is deployed and will run daily. Results are stored in the **Cloud Storage** bucket
+and can be accessed through the **Cloud Storage** console.
+
+To make them accessible for a frontend, you can make the bucket public. To do this, follow the
+instructions [here](https://cloud.google.com/storage/docs/access-control/making-data-public).
+
+In example frontend is provided at https://linusfolkerts.com ([GitHub](https://github.com/f-linus/natural_gas_consumption_modelling_frontend))
 
 ## Data
+
+Historical data is already partly included in the repository. Data is provided through following sources.
 
 ### Weather
 
