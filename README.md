@@ -15,9 +15,9 @@ cd natural_gas_consumption_modelling
 
 ### 2. Python version
 
-This project requires a Python version of 3.9 or 3.10. To install Python, follow the instructions on the [Python website](https://www.python.org/downloads/).
+This project requires a Python version of `3.9` or `3.10`. To install Python, follow the instructions on the [Python website](https://www.python.org/downloads/).
 
-`pyenv` is a convenient tool to manage multiple Python versions on your machine. To install `pyenv`, follow the instructions on the [pyenv GitHub page](https://github.com/pyenv/pyenv). (There is also a fork for Windows available [here](https://pyenv-win.github.io/pyenv-win/))
+**pyenv** is a convenient tool to manage multiple Python versions on your machine. To install **pyenv**, follow the instructions on the [pyenv GitHub page](https://github.com/pyenv/pyenv). (There is also a fork for Windows available [here](https://pyenv-win.github.io/pyenv-win/))
 
 ### 3. Dependency management: Poetry
 
@@ -37,16 +37,62 @@ The environment can be activated by running
 poetry shell
 ```
 
-or when using `VS Code` by selecting the environment.
+or when using **VS Code** by selecting the environment.
 
-Installing the dependencies allows you to run all Notebooks in the `notebooks` folder which cover
+Installing the dependencies allows you to run all Notebooks in the notebooks folder which cover
 the Data Analysis part of the project.
 
-To run the full forecasting pipeline a `Google Cloud Storage` backend is required.
+To run the full forecasting pipeline a **Google Cloud Storage** backend is required.
 
 ### 4. Google Cloud Storage
 
+The project uses **Google Cloud Storage** as a backend for the forecasting pipeline. To use the
+pipeline you need to create a **Google Cloud Storage** bucket.
+
+#### 4.1: Create a Google Cloud Platform (GCP) account
+
+To create a **Google Cloud Storage** bucket you need a **Google Cloud Platform** account. You can
+create one [here](https://cloud.google.com/).
+
+#### 4.2: Create or select a project
+
+First, create a new project or select an existing one. You can do this by following the instructions
+[here](https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+
+#### 4.2: Activate the Google Cloud Storage API
+
+To use the **Google Cloud Storage** API you need to activate it. You can do this by following the
+instructions [here](https://cloud.google.com/storage/docs/quickstart-console).
+
+#### 4.3: Create a bucket
+
+To create a bucket follow the instructions [here](https://cloud.google.com/storage/docs/creating-buckets).
+
+Name the bucket `natural-gas-consumption-modelling` and select a region close to you.
+
+#### 4.4: Connecting locally to GCP
+
+To use the storage backend from a local version of the pipeline you need to connect to GCP. You can
+do this by using the `gcloud` command line tool. To install `gcloud` follow the instructions
+[here](https://cloud.google.com/sdk/docs/install).
+
+If not already done, initialise `gcloud` by running
+
+```bash
+gcloud init
+```
+
+and follow the instructions.
+
+This will allow all GCP python dependencies to connect to GCP and to use the storage backend.
+
 ## Usage
+
+TODO
+
+## Deploying a new pipeline version on GCP
+
+TODO
 
 ## Data
 
