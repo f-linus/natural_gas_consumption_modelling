@@ -23,6 +23,7 @@ torchvision = "*"
 torchaudio = "*"
 neuralprophet = "0.5.4"
 ipykernel = "^6.23.2"
+google-cloud-storage = "^2.9.0"
 
 [build-system]
 requires = ["poetry-core"]
