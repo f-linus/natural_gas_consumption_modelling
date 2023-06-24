@@ -1,5 +1,53 @@
 # Natural Gas Consumption Modelling
 
+Germany's dependence on natural gas highlights the need for accurate forecasting methods. Despite advances, many traditional forecasting models lack reproducibility due to limited data access. This project addresses this gap by providing open-source, publicly available forecasts of Germany's natural gas consumption. Our focus is on using publicly available data, using state-of-the-art models for time-efficient forecast implementation, and ensuring continuous publication and producibility of these forecasts.
+
+This repository is dedicated to the backend of this project, hosting the forecast pipeline and data analysis notebooks.
+
+## Setup
+
+### 1. Clone the repository
+
+```bash
+git clone git@github.com:f-linus/natural_gas_consumption_modelling.git
+cd natural_gas_consumption_modelling
+```
+
+### 2. Python version
+
+This project requires a Python version of 3.9 or 3.10. To install Python, follow the instructions on the [Python website](https://www.python.org/downloads/).
+
+`pyenv` is a convenient tool to manage multiple Python versions on your machine. To install `pyenv`, follow the instructions on the [pyenv GitHub page](https://github.com/pyenv/pyenv). (There is also a fork for Windows available [here](https://pyenv-win.github.io/pyenv-win/))
+
+### 3. Dependency management: Poetry
+
+This project uses [Poetry](https://python-poetry.org/) for dependency management. To install Poetry, follow the instructions on the [Poetry website](https://python-poetry.org/docs/#installation).
+
+To install the project dependencies, run
+
+```bash
+poetry install
+```
+
+This will create a virtual environment and install all dependencies necessary and specified in `pyproject.toml`.
+
+The environment can be activated by running
+
+```bash
+poetry shell
+```
+
+or when using `VS Code` by selecting the environment.
+
+Installing the dependencies allows you to run all Notebooks in the `notebooks` folder which cover
+the Data Analysis part of the project.
+
+To run the full forecasting pipeline a `Google Cloud Storage` backend is required.
+
+### 4. Google Cloud Storage
+
+## Usage
+
 ## Data
 
 ### Weather
