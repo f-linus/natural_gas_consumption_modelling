@@ -171,7 +171,7 @@ and can be accessed through the **Cloud Storage** console.
 To make them accessible for a frontend, you can make the bucket public. To do this, follow the
 instructions [here](https://cloud.google.com/storage/docs/access-control/making-data-public).
 
-In example frontend is provided at https://linusfolkerts.com ([GitHub](https://github.com/f-linus/natural_gas_consumption_modelling_frontend))
+An example frontend is provided at https://linusfolkerts.com ([GitHub](https://github.com/f-linus/natural_gas_consumption_modelling_frontend)).
 
 ## Data
 
