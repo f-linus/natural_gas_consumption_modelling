@@ -88,9 +88,41 @@ This will allow all GCP python dependencies to connect to GCP and to use the sto
 
 ## Usage
 
-TODO
+The repository encompasses both Notebooks that cover Data Analysis and Model discussion as well as
+the full forecasting pipeline in the `src` folder.
 
-## Deploying a new pipeline version on GCP
+### Notebooks
+
+The Notebooks are located in the `notebooks` folder. Running them requires the dependencies to be
+installed as described in the Setup section. However, the Notebooks **do not** require a GCP connection.
+
+The Notebooks can be run natively in **Jupyter** or **JupyterLab** or in **VS Code**.
+
+To run through **Jupyter** in browser, run
+
+```bash
+cd notebooks
+poetry shell
+jupyter notebook
+```
+
+From the browser, notebooks in all subfolders `data_overview`, `data_analysis` and `modelling` can
+be run.
+
+### Forecasting Pipeline
+
+The forecasting pipeline is located in the `src` folder. It can be run locally or deployed to GCP.
+It requires the dependencies to be installed as described in the Setup section and a GCP connection
+as described in the GCP section.
+
+The pipeline can be run locally by running
+
+```bash
+poetry shell
+python -m src.daily_model_run
+```
+
+## Deploying a new pipeline version to GCP
 
 For the example frontend at https://linusfolkerts.com, the pipeline is deployed on GCP.
 
