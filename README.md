@@ -124,6 +124,8 @@ python -m src.daily_model_run
 
 ## Deploying a new pipeline version to GCP
 
+![Pipeline architecture](diagrams/backend_architecture.png)
+
 For the example frontend at https://linusfolkerts.com, the pipeline is deployed on GCP.
 
 The model is run daily as a **Cloud Run** Job, triggered through **Cloud Scheduler**. From there,
