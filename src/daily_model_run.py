@@ -7,7 +7,7 @@ storage_backend = "google_cloud_storage"
 
 # Connect to Google Cloud Storage
 storage_client = storage.Client()
-bucket = storage_client.get_bucket("natural_gas_consumption_modelling")
+bucket = storage_client.get_bucket("natural_gas_consumption_modelling2")
 
 # Check if persisted database exists
 if storage.Blob("db", bucket).exists():
