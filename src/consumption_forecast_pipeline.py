@@ -19,7 +19,7 @@ class ConsumptionForecastPipeline:
         if self.storage_backend == "google_cloud_storage":
             self.storage_client = storage.Client()
             self.bucket = self.storage_client.get_bucket(
-                "natural_gas_consumption_modelling"
+                "natural_gas_consumption_modelling2"
             )
 
     def __persist_db(self):
