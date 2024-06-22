@@ -1,0 +1,16 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/pipeline-img', '.']
+
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/pipeline-img']
+
+# Specify the images to be pushed to Container Registry
+images:
+  - 'gcr.io/$PROJECT_ID/pipeline-img'
+
+# Configure logging
+options:
+  logging: CLOUD_LOGGING_ONLY
